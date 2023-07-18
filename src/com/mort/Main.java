@@ -1,17 +1,56 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+package com.mort;
+import java.text.NumberFormat;
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        final byte MONTH_IN_YEAR = 12;
+        final byte PERCENT = 100;
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+        Scanner scanner = new Scanner(System.in);
+
+        int principal = 0;
+        while (true) {
+
+
+            System.out.printf("Principal");
+            principal = scanner.nextInt();
+            if (principal >= 1000 && principal <= 1_000_000) {
+                break;
+            }
+            System.out.println("Enter a value between 1000 and 1_000_000");
         }
+
+        float monthlyInterest = 0;
+        while (true) {
+
+            System.out.print("Annual Interest Rate:");
+            float annualInterset = scanner.nextFloat();
+            if (annualInterset >= 1 && annualInterset <= 30) {
+                monthlyInterest = annualInterset / PERCENT / MONTH_IN_YEAR;
+                break;
+            }
+
+            System.out.println("Enter a value between 1 and 30");
+        }
+
+        int numberOfPayments = 0;
+        while (true) {
+            System.out.print("Period (Years):");
+            byte years = scanner.nextByte();
+            if (years >= 1 && years <= 30) {
+                numberOfPayments = years * MONTH_IN_YEAR;
+                break;
+            }
+            System.out.println("Enter a value between 1 and 30");
+        }
+
+        double mortgage = principal * (monthlyInterest * Math.pow(1 + monthlyInterest, numberOfPayments))
+                / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1);
+
+        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+        System.out.println("Mortgage:" + mortgageFormatted);
+
+
     }
-}
+    }
